@@ -42,6 +42,34 @@ arcpy.gp.Aggregate_sa("lookupCEC", "C:/Users/paleolab/Documents/soils/gssurgo_g_
 arcpy.gp.Aggregate_sa("lookupCEC", "C:/Users/paleolab/Documents/soils/gssurgo_g_in/8km_in_cec", "800", "MEAN", "EXPAND", "DATA")
 arcpy.gp.Aggregate_sa("lookupCEC", "C:/Users/paleolab/Documents/soils/gssurgo_g_mi/8km_mi_sand", "800", "MEAN", "EXPAND", "DATA")
 
+#Mosaic All the Cation Exchange Capacity rasters together: CEC
+arcpy.MosaicToNewRaster_management(input_rasters="C:/Users/paleolab/Documents/soils/gssurgo_g_mn/lookupCEC;C:/Users/paleolab/Documents/soils/gssurgo_g_il/lookupCEC;C:/Users/paleolab/Documents/soils/gssurgo_g_wi/lookupCEC;C:/Users/paleolab/Documents/soils/gssurgo_g_in/lookupCEC;C:/Users/paleolab/Documents/soils/gssurgo_g_mi/lookupCEC", output_location="C:/Dropbox/GIS_Kelly/Kelly Heilman/gSSURGOsoil/soils", raster_dataset_name_with_extension="mosaicCEC.tif", coordinate_system_for_the_raster="", pixel_type="32_BIT_UNSIGNED", cellsize="", number_of_bands="1", mosaic_method="BLEND", mosaic_colormap_mode="FIRST")
+
+
+
+# Here we are processing for calcium carbonate:
+# lookup creates a new raster with the selected field (2nd argument) as the value for the raster
+# Replace a layer/table view name with a path to a dataset (which can be a layer file) or create the layer/table view within the script
+# The following inputs are layers or table views: "MapunitRaster_wi_10m"
+arcpy.gp.Lookup_sa("MapunitRaster_wi_10m", "tbl_Calcium_Carbonate__Rep_Value_wtd_avg_0_30.caco3_r", "C:/Users/paleolab/Documents/soils/gssurgo_g_wi/lookupcaco3")
+arcpy.gp.Lookup_sa("MapunitRaster_mn_10m", "tbl_Calcium_Carbonate__Rep_Value_wtd_avg_0_30.caco3_r", "C:/Users/paleolab/Documents/soils/gssurgo_g_mn/lookupcaco3")
+arcpy.gp.Lookup_sa("MapunitRaster_il_10m", "tbl_Calcium_Carbonate__Rep_Value_wtd_avg_0_30.caco3_r", "C:/Users/paleolab/Documents/soils/gssurgo_g_il/lookupcaco3")
+arcpy.gp.Lookup_sa("MapunitRaster_in_10m", "tbl_Calcium_Carbonate__Rep_Value_wtd_avg_0_30.caco3_r", "C:/Users/paleolab/Documents/soils/gssurgo_g_in/lookupcaco3")
+arcpy.gp.Lookup_sa("MapunitRaster_mi_10m", "tbl_Calcium_Carbonate__Rep_Value_wtd_avg_0_30.caco3_r", "C:/Users/paleolab/Documents/soils/gssurgo_g_mi/lookupcaco3")
+
+#now create 8km  aggregated rasters from the lookup raster
+
+# for soil calcium carbonate
+arcpy.gp.Aggregate_sa("lookupcaco3", "C:/Users/paleolab/Documents/soils/gssurgo_g_wi/8km_wi_caco3", "800", "MEAN", "EXPAND", "DATA")
+arcpy.gp.Aggregate_sa("lookupcaco3", "C:/Users/paleolab/Documents/soils/gssurgo_g_mn/8km_mn_caco3", "800", "MEAN", "EXPAND", "DATA")
+arcpy.gp.Aggregate_sa("lookupcaco3", "C:/Users/paleolab/Documents/soils/gssurgo_g_il/8km_il_caco3", "800", "MEAN", "EXPAND", "DATA")
+arcpy.gp.Aggregate_sa("lookupcaco3", "C:/Users/paleolab/Documents/soils/gssurgo_g_in/8km_in_caco3", "800", "MEAN", "EXPAND", "DATA")
+arcpy.gp.Aggregate_sa("lookupcaco3", "C:/Users/paleolab/Documents/soils/gssurgo_g_mi/8km_mi_caco3", "800", "MEAN", "EXPAND", "DATA")
+
+#Mosaic All the Cation Exchange Capacity rasters together: calcium carbonate
+arcpy.MosaicToNewRaster_management(input_rasters="C:/Users/paleolab/Documents/soils/gssurgo_g_mn/lookupcaco3;C:/Users/paleolab/Documents/soils/gssurgo_g_il/lookupcaco3;C:/Users/paleolab/Documents/soils/gssurgo_g_wi/lookupcaco3;C:/Users/paleolab/Documents/soils/gssurgo_g_in/lookupcaco3;C:/Users/paleolab/Documents/soils/gssurgo_g_mi/lookupcaco3", output_location="C:/Dropbox/GIS_Kelly/Kelly Heilman/gSSURGOsoil/soils", raster_dataset_name_with_extension="mosaiccaco3.tif", coordinate_system_for_the_raster="", pixel_type="32_BIT_UNSIGNED", cellsize="", number_of_bands="1", mosaic_method="BLEND", mosaic_colormap_mode="FIRST")
+
+
 # Replace a layer/table view name with a path to a dataset (which can be a layer file) or create the layer/table view within the script
 # The following inputs are layers or table views: "lookupsand"
 
