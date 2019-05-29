@@ -2,25 +2,33 @@
 #Author: Kelly Heilman
 #Date: 11/30/16
 
-#This is done in Arcgis command line using mapunit 10m gssurgo rasters from NCRS geospatial gateway. These rasters are run through the Ssurgo on demand arcgis toolbox to create and join soil tables
+# This is done in Arcgis command line using mapunit 10m gssurgo rasters from NCRS geospatial gateway. These rasters are run through the Ssurgo on demand arcgis toolbox to create and join soil tables
+filedir = "C:/Users/paleolab/Documents/soils/"
+
+state = "IN"
+raster10m =  ["MapunitRaster_" + state + "_10m"]
 
 
-# run the SDA properties tool (need gssurgo toolkiet) to get weighted averages for calcium carbonate & cation exchange capacity for each state:
-arcpy.SDAPROPERTIES2(Soil_Survey_Areas="C:/Users/paleolab/Documents/soils/gssurgo_g_il/gSSURGO_IL.gdb/SAPOLYGON", Soil_Survey_Choicelist="IL001;IL003;IL005;IL007;IL009;IL011;IL013;IL015;IL017;IL019;IL021;IL023;IL025;IL027;IL029;IL031;IL033;IL035;IL037;IL039;IL041;IL043;IL045;IL047;IL049;IL051;IL053;IL055;IL057;IL059;IL061;IL063;IL065;IL067;IL069;IL071;IL073;IL075;IL077;IL079;IL081;IL083;IL085;IL087;IL089;IL091;IL093;IL095;IL097;IL099;IL101;IL103;IL105;IL107;IL109;IL111;IL113;IL115;IL117;IL119;IL121;IL123;IL125;IL127;IL129;IL131;IL133;IL135;IL137;IL139;IL141;IL143;IL145;IL147;IL149;IL151;IL153;IL155;IL157;IL159;IL161;IL163;IL165;IL167;IL169;IL171;IL173;IL175;IL177;IL179;IL181;IL183;IL185;IL187;IL189;IL191;IL193;IL195;IL197;IL199;IL201;IL203", Aggregation_Method="Weighted Average", Soil_Property="'Calcium Carbonate - Rep Value';'Cation Exchange Capcity - Rep Value'", Top_Depth="0", Bottom_Depth="30", Min_Max="", Output_File_Geodatabase="C:/Users/paleolab/Documents/soils/gssurgo_g_il/gSSURGO_IL.gdb", Join_Layer="")
-arcpy.SDAPROPERTIES2(Soil_Survey_Areas="C:/Users/paleolab/Documents/soils/gssurgo_g_in/gSSURGO_IN.gdb/SAPOLYGON", Soil_Survey_Choicelist="IN001;IN003;IN005;IN007;IN009;IN011;IN013;IN015;IN017;IN019;IN021;IN023;IN025;IN027;IN029;IN031;IN033;IN035;IN037;IN039;IN041;IN043;IN045;IN047;IN049;IN051;IN053;IN055;IN057;IN059;IN061;IN063;IN065;IN067;IN069;IN071;IN073;IN075;IN077;IN079;IN081;IN083;IN085;IN087;IN089;IN091;IN093;IN095;IN097;IN099;IN101;IN103;IN105;IN107;IN109;IN111;IN113;IN115;IN117;IN119;IN121;IN123;IN125;IN127;IN129;IN131;IN133;IN135;IN137;IN139;IN141;IN143;IN145;IN147;IN149;IN151;IN153;IN155;IN157;IN159;IN161;IN163;IN165;IN167;IN169;IN171;IN173;IN175;IN177;IN179;IN181;IN183", Aggregation_Method="Weighted Average", Soil_Property="'Calcium Carbonate - Rep Value';'Cation Exchange Capcity - Rep Value'", Top_Depth="0", Bottom_Depth="30", Min_Max="", Output_File_Geodatabase="C:/Users/paleolab/Documents/soils/gssurgo_g_in/gSSURGO_IN.gdb", Join_Layer="")
-arcpy.SDAPROPERTIES2(Soil_Survey_Areas="C:/Users/paleolab/Documents/soils/gssurgo_g_mn/gSSURGO_MN.gdb/SAPOLYGON", Soil_Survey_Choicelist="MN001;MN003;MN005;MN007;MN009;MN011;MN013;MN015;MN017;MN019;MN021;MN023;MN025;MN027;MN029;MN031;MN033;MN035;MN037;MN039;MN041;MN043;MN045;MN047;MN049;MN051;MN053;MN055;MN057;MN059;MN061;MN063;MN065;MN067;MN069;MN073;MN075;MN077;MN079;MN081;MN083;MN085;MN087;MN089;MN091;MN093;MN095;MN097;MN099;MN101;MN103;MN105;MN107;MN109;MN111;MN113;MN115;MN117;MN119;MN121;MN123;MN125;MN127;MN129;MN131;MN133;MN135;MN139;MN141;MN143;MN145;MN147;MN149;MN151;MN153;MN155;MN157;MN159;MN161;MN163;MN165;MN167;MN169;MN171;MN173;MN613;MN615;MN617;MN619;MN621;MN625;MN627", Aggregation_Method="Weighted Average", Soil_Property="'Calcium Carbonate - Rep Value';'Cation Exchange Capcity - Rep Value'", Top_Depth="0", Bottom_Depth="30", Min_Max="", Output_File_Geodatabase="C:/Users/paleolab/Documents/soils/gssurgo_g_mn/gSSURGO_MN.gdb", Join_Layer="")
+# need to do the table joins:
 
-# need to join these new tables to the 10m raster!
 
 # Here we are processing for sand 
 #lookup creates a new raster with the selected field (2nd argument) as the value for the raster
 # Replace a layer/table view name with a path to a dataset (which can be a layer file) or create the layer/table view within the script
 # The following inputs are layers or table views: "MapunitRaster_wi_10m"
-arcpy.gp.Lookup_sa("MapunitRaster_wi_10m", "tbl_Total_Sand__Rep_Value_wtd_avg_0_30.sandtotal_r", "C:/Users/paleolab/Documents/soils/gssurgo_g_wi/lookupsand")
-arcpy.gp.Lookup_sa("MapunitRaster_mn_10m", "tbl_Total_Sand__Rep_Value_wtd_avg_0_30.sandtotal_r", "C:/Users/paleolab/Documents/soils/gssurgo_g_mn/lookupsand")
-arcpy.gp.Lookup_sa("MapunitRaster_il_10m", "tbl_Total_Sand__Rep_Value_wtd_avg_0_30.sandtotal_r", "C:/Users/paleolab/Documents/soils/gssurgo_g_il/lookupsand")
-arcpy.gp.Lookup_sa("MapunitRaster_in_10m", "tbl_Total_Sand__Rep_Value_wtd_avg_0_30.sandtotal_r", "C:/Users/paleolab/Documents/soils/gssurgo_g_in/lookupsand")
-arcpy.gp.Lookup_sa("MapunitRaster_mi_10m", "tbl_Total_Sand__Rep_Value_wtd_avg_0_30.sandtotal_r", "C:/Users/paleolab/Documents/soils/gssurgo_g_mi/lookupsand")
+
+
+arcpy.gp.Lookup_sa( raster10m , "tbl_Total_Sand__Rep_Value_wtd_avg_0_30.sandtotal_r", [filedir + "lookupsand_" + state ])
+arcpy.gp.Lookup_sa( raster10m , "tbl_Total_Sand__Rep_Value_wtd_avg_0_30.sandtotal_r", [filedir + "lookupsilt_" + state ])
+arcpy.gp.Lookup_sa( raster10m , "tbl_Total_Sand__Rep_Value_wtd_avg_0_30.sandtotal_r", [filedir + "lookupclay_" + state ])
+arcpy.gp.Lookup_sa( raster10m , "tbl_Total_Sand__Rep_Value_wtd_avg_0_30.sandtotal_r", [filedir + "lookupCEC_" + state ])
+
+
+# aggregate soil parameters to 1km:
+arcpy.gp.Aggregate_sa(["lookupsand_" + state], [filedir + state + "8km_sand"], "100", "MEAN", "EXPAND", "DATA")
+
+# aggregate soil parameters to 1km:
+arcpy.gp.Aggregate_sa(["lookupsand_" + state], [filedir + state + "8km_sand"], "800", "MEAN", "EXPAND", "DATA")
 
 
 # Here we are processing for cation exchange capacity
