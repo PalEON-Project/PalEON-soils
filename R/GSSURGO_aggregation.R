@@ -15,7 +15,7 @@ library(dplyr)
 workingdir <- "/Users/kah/Documents/PalEON-soils/"
 
 # The input file geodatabase
- state <- "IN" # just change this for each state
+state <- "IN" # just change this for each state
 fgdb <-  paste0("data/gSSURGO_",state,".gdb/") # you should have the state level gssurgo .gdb saved in a datafolder
 
 # List all feature classes in a file geodatabase
