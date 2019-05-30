@@ -6,17 +6,19 @@
 # the output component table needs to be joined to the 10m gssurgo rasters by state level
 # downloaded state level data from:https://datagateway.nrcs.usda.gov/GDGOrder.aspx?order=QuickState
 
-library(plyr)
+#library(plyr)
 library(raster)
 library(foreign)
 require(rgdal)
 library(dplyr)
 
-workingdir <- "/Users/kah/Documents/PalEON-soils/"
+#workingdir <- "/Users/kah/Documents/PalEON-soils/"
+workingdir <- "C:/Users/paleolab/Documents/soils/gssurgo_g_il/"
 
+setwd(workingdir)
 # The input file geodatabase
- state <- "IN" # just change this for each state
-fgdb <-  paste0("data/gSSURGO_",state,".gdb/") # you should have the state level gssurgo .gdb saved in a datafolder
+state <- "IL" # just change this for each state
+fgdb <-  paste0("gSSURGO_",state,".gdb") # you should have the state level gssurgo .gdb saved in a datafolder
 
 # List all feature classes in a file geodatabase
 subset(ogrDrivers(), grepl("GDB", name))
@@ -140,6 +142,9 @@ comp.merged <- merge(component.subset, chorizon.agg, by='cokey')
 component.agg <- comp.merged %>% group_by(mukey) %>% do(mapunit_level_aggregation(.))
 
 component.agg$mukey <- as.character(component.agg$mukey)
+component.agg$OID <- as.character(1:length(component.agg$mukey))
 
+# save to 
+savedir <- "C:/Users/paleolab/Documents/soils/"
 # save data back to a csv
-write.csv(component.agg, file=paste0('data/component_tables/',state,'_component_agg.csv'), row.names=FALSE)
+write.csv(component.agg, file=paste0(savedir, 'data/component_tables/',state,'_component_agg.csv'), row.names=FALSE)
