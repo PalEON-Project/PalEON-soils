@@ -105,8 +105,19 @@ for val in dist:
 	
 
 # If you want to change the aggregation for whole paleon domain:
-newdist = ["800"] # change to 8km
-newvar = ["sil"] # running on silt
+# need to load the kevmos+newvar+.tif file of interest into Arcmap
+# then pick the distance to aggregate the 10 m data to
+newdist = "800" # change to 8km = 800 X 10 meter
+newvar = "silt" # running on silt (change to variable of interest)
 arcpy.gp.Aggregate_sa("kevmos"+newvar+".tif", "E:/Kelly/soils/kev_"+newdist[:1] +"_km_"+newvar[:3], newdist, "MEAN", "EXPAND", "DATA")
+
+
+# you could also try to run aggregation in a loop as follows:
+for val in dist:
+	for var in params:
+		#x = filepath+"/Minnesota/lookup"+var[:3]+"mn;" +filepath+"/Indiana/lookup"+var[:3]+"in;"+filepath+"/Wisconsin/lookup"+var[:3]+"wi;"+filepath+"/Illinois/lookup"+var[:3]+"il;"+filepath+"/Michigan/lookup"+var[:3]+"mi;" +filepath+"/Pennslyvania/lookup"+var[:3]+"pa;"+filepath+"/New York/lookup"+var[:3]+"ny;"+filepath+"/New Jersey/lookup"+var[:3]+"nj;"+filepath+"/Massachusetts/lookup"+var[:3]+"ma;"+filepath+"/Vermont/lookup"+var[:3]+"vt;"+filepath+"/New Hampshire/lookup"+var[:3]+"nh;"+filepath+"/Maine/lookup"+var[:3]+"me;"+filepath+"/Connecticut/lookup"+var[:3]+"ct;"+filepath+"/Rhode Island/lookup"+var[:3]+"ri;"+filepath+"/Delaware/lookup"+var[:3]+"de;"+filepath+"/Ohio/lookup"+var[:3]+"oh;"+filepath+"/Pennsylvania/lookup"+var[:3]+"pa"
+		#arcpy.MosaicToNewRaster_management(input_rasters=x, output_location="E:/Kelly/soils", raster_dataset_name_with_extension="kevmos"+ var + ".tif", coordinate_system_for_the_raster="", pixel_type="32_BIT_FLOAT", cellsize="", number_of_bands="1", mosaic_method="BLEND", mosaic_colormap_mode="FIRST")
+	arcpy.gp.Aggregate_sa("kevmos"+var+".tif", "E:/Kelly/soils/kev_"+val[:1] +"_km_"+var[:3], val, "MEAN", "EXPAND", "DATA")
+	
 
 		
